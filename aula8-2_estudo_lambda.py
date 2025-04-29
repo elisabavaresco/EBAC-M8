@@ -13,6 +13,7 @@ print(eleva_cubo_lambda(2))
 
 df = pd.DataFrame({'numeros': [1, 2, 3, 4, 5, 10]})
 
+# aplicando funções e criando colunas
 df['cubo_funcao'] = df['numeros'].apply(eleva_cubo)
 df['cubo_lambda'] = df['numeros'].apply(lambda x: x ** 3)
 print(df)
