@@ -63,3 +63,11 @@ df['data_corrigida'] = pd.to_datetime(df['data'], format='%d/%m/%Y', errors='coe
 df['data_corrigida'].fillna(pd.to_datetime('01/01/1970'), inplace=True)
 # Dica adicional: verificar se a conversão foi bem-sucedida: 
 # print(df['data_corrigida'].isna().sum())  # Conta quantos valores são NaT (inválidos). # Conta quantos valores são NaT (inválidos).
+
+# Tratar dados duplicados
+print('Qtd registros atual: ', df.shape[0])
+df.drop_duplicates()
+df.drop_duplicates(subset='cpf', inplace=True)
+print('Qtd registros removendo as duplicadas: ', len(df))
+
+print('Dados Limpos: \n', df)
