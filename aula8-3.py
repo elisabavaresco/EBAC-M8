@@ -71,3 +71,12 @@ df.drop_duplicates(subset='cpf', inplace=True)
 print('Qtd registros removendo as duplicadas: ', len(df))
 
 print('Dados Limpos: \n', df)
+
+# Salvar dataframe
+df['data'] = df['data_corrigida'] 
+df['idade'] - df['idade_corrigida']
+
+df_salvar = df[['nome', 'cpf', 'idade', 'data', 'endereco', 'estado']]
+df_salvar.to_csv('clientes_limpeza.csv', index=False)
+
+print('Novo DataFrame: \n', pd.read_csv('clientes_limpeza.csv'))
