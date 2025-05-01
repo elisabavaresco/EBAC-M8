@@ -55,3 +55,11 @@ df['idade_corrigida'] = df['idade'].fillna(df['idade'].mean()) # Cria uma nova c
 # Preencher com a moda (valor mais frequente): df['estado'].fillna(df['estado'].mode()[0], inplace=True)
 # Preencher numéricos com a média: df['idade'].fillna(df['idade'].mean(), inplace=True)
 # Preencher com a mediana (menos sensível a outliers): df['idade_corrigida'] = df['idade'].fillna(df['idade'].median())
+
+# Tratar formato de dados (Datas)
+df['data_corrigida'] = pd.to_datetime(df['data'], format='%d/%m/%Y', errors='coerce') # Essa linha de código realiza a conversão de uma coluna de datas em formato texto (string) para o tipo datetime.
+# errors='coerce': Se encontrar um valor que não corresponde ao formato (ex.: "31/02/2023" ou "abc"): Converte para NaT (Not a Time, equivalente a NaN para datas). Sem essa opção, o pandas levantaria um erro.
+# Substituir NaT por uma data padrão:
+df['data_corrigida'].fillna(pd.to_datetime('01/01/1970'), inplace=True)
+# Dica adicional: verificar se a conversão foi bem-sucedida: 
+# print(df['data_corrigida'].isna().sum())  # Conta quantos valores são NaT (inválidos). # Conta quantos valores são NaT (inválidos).
