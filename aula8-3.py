@@ -32,3 +32,26 @@ df_dropna = df.dropna() # Remover linhas com pelo menos um NaN
 df_dropna4 = df.dropna(thresh=4) # Remover todas as linhas que não possuem pelo menos 4 valores não nulos (ou seja, linhas com 3 ou mais valores NaN são descartadas)
 df_dropnaall = df.dropna(how='all') # Remover todas as colunas nulas
 df = df.dropna(subset=['cpf']) # Remover linha com CPF nulo
+
+print(df.info()) # para enxergar infos (se não é nulo e o tipo de dado) por coluna 
+
+print('Valores nulos: \n', df.isnull().sum()) # para enxergar infos (se não é nulo e o tipo de dado) por coluna 
+
+print('Qtd de registros nulos com fillna:', df_fillna.isnull().sum().sum()) # Resultado: Imprime o total de valores NaN restantes em df_fillna
+print('Qtd de registros nulos com dropna:', df_dropna.isnull().sum().sum()) # Resultado: Imprime o total de valores NaN restantes em df_dropna
+print('Qtd de registros nulos com dropna4:', df_dropna4.isnull().sum().sum()) # Resultado: Imprime o total de valores NaN restantes em df_dropna4
+print('Qtd de registros nulos com CPF:', df['cpf'].isnull().sum()) # Resultado: Imprime o total de valores NaN restantes na coluna CPF
+print('Qtd de registros nulos do DF:', df.isnull().sum().sum()) # Resultado: Imprime o total de valores NaN do DataFrame
+
+# Continuação: Tratar valores nulos (ausentes)
+df.fillna({'estado': 'Desconhecido', 'bairro': 'Não informado'}, inplace=True) # Substitui os valores nulos na coluna 'estado' por 'Desconhecido' e da coluna 'bairro' por 'Não informado'
+# inplace=True: Modifica o DataFrame df diretamente, sem precisar criar uma nova variável. Se fosse inplace=False (padrão), você precisaria atribuir a um novo DataFrame. Segue exemplo abaixo:
+# df_novo = df.fillna({'estado': 'Desconhecido', 'bairro': 'Não informado'})
+df['endereco'] = df['endereco'].fillna('Endereço não informado') # Substitui os valores NaN da somente da coluna 'endereco' por 'Endereço não informado'.
+df['idade_corrigida'] = df['idade'].fillna(df['idade'].mean()) # Cria uma nova coluna chamada 'idade_corrigida' no DataFrame (ou seja, não modifica a coluna original), contendo: Os valores originais de 'idade' (onde não eram NaN). E a média da coluna 'idade' nos lugares onde havia NaN.
+
+# Outra alternativas comuns:
+# Preencher todas as colunas com um valor padrão: df.fillna('Desconhecido', inplace=True)
+# Preencher com a moda (valor mais frequente): df['estado'].fillna(df['estado'].mode()[0], inplace=True)
+# Preencher numéricos com a média: df['idade'].fillna(df['idade'].mean(), inplace=True)
+# Preencher com a mediana (menos sensível a outliers): df['idade_corrigida'] = df['idade'].fillna(df['idade'].median())
